@@ -67,7 +67,7 @@
         }
 
         // all available social networks
-        SocialNetwork.networks  = ['twitter', 'google', 'instagram', 'vk'];
+        SocialNetwork.networks  = ['twitter', 'google', 'instagram', 'vk', 'facebook'];
 
         // number of networks to be loaded
         SocialNetwork.networksToLoad = 0;
@@ -143,6 +143,11 @@
                 if(network.name === "google"){
                     methodType = "GET";
                 }
+		    
+		 // googleplus accepts only GET request
+                if(network.name === "facebook"){
+                    methodType = "GET";
+                }    
 
                 // use Codebird JS library only for twitter, otherwise make an ajax call to provided url.
                 if(network.name === "twitter"){
@@ -648,7 +653,61 @@
                     options.callback();
                 }
             },
+	    facebook: {
 
+                _instance: null,
+                init: function(){
+
+                    var api = 'https://www.graph.facebook.com/v2.5/search?q=%23hashtag';
+                    var hashtag = Utility.urlencode(options.facebook.hashtag);
+                    var access_token = "";
+                    var count = options.facebook.count;
+
+                    if(Utility.empty(this._instance)){
+                        plugin.facebook._instance = new SocialNetwork("facebook", api + hashtag + "&access_token="+ options.facebook.access_token + "&count="+ count +"&callback=?");//&access_token=' + options.facebook.access_token + '&callback=?
+                    }//'&access_token=' + options.facebook.access_token + '&callback=?'
+                    plugin.facebook._instance.ajax(this.success);//, {params: "q=%23" + hashtag + "&count=" + count, consumer_key: consumer_key, consumer_secret: consumer_secret});
+
+                },
+                success: function(data){
+
+                    var post = data.data;
+                    var len  = (post)? post.length: 0;
+                    var postData = { network: "facebook" };
+                    var _this  = plugin.facebook;
+
+                    for(var i=0; i < len ; i++ ){
+
+                        if(post[i].id === _this._instance.lastId && !Utility.empty(_this._instance.lastId)){
+                            break;
+                        }
+
+                        postData.user_name = post[i].user.username;
+                        postData.user_image = post[i].user.profile_picture;
+                        postData.time = post[i].created_time;
+                        postData.text = !Utility.empty(post[i].caption.text)? post[i].caption.text: "";
+                        postData.url = post[i].link;
+
+                        try{
+
+                            postData.attachement_src = post[i].images.standard_resolution.url;
+                            postData.attachement_width = post[i].images.standard_resolution.width;
+                            postData.attachement_height = post[i].images.standard_resolution.height;
+                            postData.post_type = "with-image";
+
+                        }catch (e){
+                            postData.attachement_src = "#";
+                            postData.attachement_width = 0;
+                            postData.attachement_height = 0;
+                            postData.post_type = "no-image";
+                        }
+
+                        SocialNetwork.render(postData);
+                    }
+
+                    if(len >= 1){ _this._instance.lastId = post[0].id; }
+                }
+            }, 
             twitter:{
                 _instance: null,
                 init: function(){
@@ -709,9 +768,12 @@
             google:{
                 _instance: null,
                 init: function(){
-
-                    var api = "https://www.googleapis.com/plus/v1/activities?query=%23";
-                    var hashtag = Utility.urlencode(options.google.hashtag);
+//graph.facebook.com
+//   /search?
+//     q={your-query}&
+//     type={object-type}
+                    var api = "https://www.googleapis.com/plus/v1/activities?query=%23";//https://www.graph.facebook.com/v2.5/search?q=%23hashtag
+                    var hashtag = Utility.urlencode(options.google.hashtag);//
                     var key = "AIzaSyCTqUXhHBuJZuIf-M-GsOVutsc8cNhABu0";
                     var count = options.google.count;
 
