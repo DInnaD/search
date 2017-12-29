@@ -28,16 +28,17 @@
             jQuery Plugin aggregates hashtags from different social media networks.
             <br>Posts are displayed in a unique, & attractive grid, and animated layout.
             <br-->
-            <h1>#sellicryptomarket</h1><br>
-            <h1>#buyicryptomarket</h1>
+            <h1>#icohelpericryptomarket</h1>
+            <br>
+            <h1>#icohelpericryptomarket</h1>
             <i class="fa fa-twitter fa-3x" style="color: #0084B4;"></i>
             <i class="fa fa-instagram fa-3x" style="color: #306088;"></i>
             <i class="fa fa-vk fa-3x" style="color: #45668e;"></i>
             <i class="fa fa-google-plus fa-3x" style="color: #DD4B39;"></i>
             <i class="fa fa-facebook-square fa-3x" style="color: #45668e;"></i>
-            <h1>#icoinformericryptomarket</h1>
-            <br>
-            <h1>#icohelpericryptomarket</h1>
+            
+            <h1>#sellicryptomarket</h1><br>
+            <h1>#buyicryptomarket</h1>
         </p>
         <hr>
         <div class="options">
@@ -174,6 +175,105 @@
                 facebook:{
                     enable: true,
                     hashtag: "buyicryptomarket",
+                    count: 5
+                },
+                textLength: 300,            // max length of post content
+                animate: 8,                 // time of animation for each post in seconds
+                refresh: 60,                // add recent posts if any evey 60 seconds
+                updateTime: 60,             // update post time every 60 second(1 min)
+                template: "default.html",   // filename for the post template. The 'template' has a priority over 'template_html' unless assigned to null
+                template_html:              // HTML for the post template
+                '<div> \
+                    <img src="{{=post.attachement_src}}" width="{{=post.attachement_width}}" height="{{=post.attachement_height}}">  \
+                    <div> \
+                        <img src="{{=post.user_image}}"> \
+                        <h4>{{=post.user_name}}</h4> \
+                        <div onclick="window.open(\'{{=post.url}}\');"><p>{{=post.text}}</p></div> \
+                        <p><i class="fa fa-clock-o"></i><span> {{=post.time}}</span></p> \
+                    </div> \
+                </div>',        
+                callback: function() {          // A callback function which will fire when all the posts are fetched and displayed
+                    console.log("Posts have been fetched and displayed");
+                },             
+                background: false,              // add background image(i.e 'background.jpg'). Images are inside img folder.
+                showError: false                // show error alert box if any error encountered
+            });
+            // start the plugin & pass your options
+            $('#hashtegny-container3').hashtegny({
+                twitter:{
+                    enable: true,
+                    hashtag: "icohelpericryptomarket",
+                    count: 5        // number of posts to be displayed
+                },
+                google:{
+                    enable: true,
+                    hashtag: "icohelpericryptomarket",
+                    count: 5
+                },
+                instagram:{
+                    enable: true,
+                    hashtag: "icohelpericryptomarket",
+                    count: 20
+                },
+                vk:{
+                    enable: true,
+                    hashtag: "icohelpericryptomarket",
+                    count: 5
+                },
+                facebook:{
+                    enable: true,
+                    hashtag: "icohelpericryptomarket",
+                    count: 5
+                },
+                
+                textLength: 300,            // max length of post content
+                animate: 8,                 // time of animation for each post in seconds
+                refresh: 60,                // add recent posts if any evey 60 seconds
+                updateTime: 60,             // update post time every 60 second(1 min)
+                template: "default.html",   // filename for the post template. The 'template' has a priority over 'template_html' unless assigned to null
+                template_html:              // HTML for the post template
+                '<div> \
+                    <img src="{{=post.attachement_src}}" width="{{=post.attachement_width}}" height="{{=post.attachement_height}}">  \
+                    <div> \
+                        <img src="{{=post.user_image}}"> \
+                        <h4>{{=post.user_name}}</h4> \
+                        <div onclick="window.open(\'{{=post.url}}\');"><p>{{=post.text}}</p></div> \
+                        <p><i class="fa fa-clock-o"></i><span> {{=post.time}}</span></p> \
+                    </div> \
+                </div>',        
+                callback: function() {          // A callback function which will fire when all the posts are fetched and displayed
+                    console.log("Posts have been fetched and displayed");
+                },             
+                background: false,              // add background image(i.e 'background.jpg'). Images are inside img folder.
+                showError: false                // show error alert box if any error encountered
+            });
+            
+            // start the plugin & pass your options
+            $('#hashtegny-container4').hashtegny({
+                
+                twitter:{
+                    enable: true,
+                    hashtag: "icohelpericryptomarket",
+                    count: 5        // number of posts to be displayed
+                },
+                google:{
+                    enable: true,
+                    hashtag: "icohelpericryptomarket",
+                    count: 5
+                },
+                instagram:{
+                    enable: true,
+                    hashtag: "icohelpericryptomarket",
+                    count: 20
+                },                 
+                vk:{
+                    enable: true,
+                    hashtag: "icohelpericryptomarket",
+                    count: 5
+                },
+                facebook:{
+                    enable: true,
+                    hashtag: "icohelpericryptomarket",
                     count: 5
                 },
                 textLength: 300,            // max length of post content
